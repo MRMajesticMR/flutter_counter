@@ -22,22 +22,44 @@ class _CounterState extends State<Counter> {
 
   void _increment() {
     setState(() {
-      _counter++;
+      ++_counter;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ElevatedButton(
-          onPressed: _increment,
-          child: const Text('Add One'),
-        ),
+        CounterDisplay(count: _counter),
         const SizedBox(width: 16.0),
-        Text('Count: $_counter'),
+        CounterIncrementor(onPressed: _increment),
       ],
+    );
+  }
+}
+
+class CounterDisplay extends StatelessWidget {
+  const CounterDisplay({required this.count, super.key});
+
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text('Count: $count');
+  }
+}
+
+class CounterIncrementor extends StatelessWidget {
+  const CounterIncrementor({required this.onPressed, super.key});
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      child: const Text('Add One'),
     );
   }
 }
